@@ -24,7 +24,7 @@ class ListeUtilisateursView(generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticated]
     
     @swagger_auto_schema(
-        tags=['Authentification'],
+        tags=['1. Authentification'],
         operation_summary="Récupérer tous les utilisateurs",
         operation_description="Obtenir la liste paginée de tous les utilisateurs du système",
         manual_parameters=[
@@ -77,7 +77,7 @@ class InscriptionView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
     
     @swagger_auto_schema(
-        tags=['Authentification'],
+        tags=['1. Authentification'],
         operation_summary="Inscription utilisateur",
         operation_description="Créer un nouveau compte utilisateur avec les informations fournies",
         request_body=InscriptionSerializer,
@@ -132,7 +132,7 @@ class LoginView(TokenObtainPairView):
     permission_classes = [permissions.AllowAny]
     
     @swagger_auto_schema(
-        tags=['Authentification'],
+        tags=['1. Authentification'],
         operation_summary="Connexion utilisateur",
         operation_description="Authentifier un utilisateur avec email et mot de passe pour obtenir un token JWT",
         request_body=LoginSerializer,
@@ -192,7 +192,7 @@ class ProfilUtilisateurView(generics.RetrieveUpdateAPIView):
         return UtilisateurSerializer
     
     @swagger_auto_schema(
-        tags=['Authentification'],
+        tags=['1. Authentification'],
         operation_summary="Récupérer le profil utilisateur",
         operation_description="Obtenir les informations du profil de l'utilisateur connecté",
         responses={
@@ -204,7 +204,7 @@ class ProfilUtilisateurView(generics.RetrieveUpdateAPIView):
         return super().get(request, *args, **kwargs)
     
     @swagger_auto_schema(
-        tags=['Authentification'],
+        tags=['1. Authentification'],
         operation_summary="Mettre à jour le profil utilisateur",
         operation_description="Modifier les informations du profil de l'utilisateur connecté",
         request_body=UtilisateurUpdateSerializer,
@@ -218,7 +218,7 @@ class ProfilUtilisateurView(generics.RetrieveUpdateAPIView):
         return super().put(request, *args, **kwargs)
     
     @swagger_auto_schema(
-        tags=['Authentification'],
+        tags=['1. Authentification'],
         operation_summary="Mettre à jour partiellement le profil",
         operation_description="Modifier partiellement les informations du profil utilisateur",
         request_body=UtilisateurUpdateSerializer,
@@ -232,10 +232,9 @@ class ProfilUtilisateurView(generics.RetrieveUpdateAPIView):
         return super().patch(request, *args, **kwargs)
 
 
-@api_view(['GET'])
-@permission_classes([permissions.IsAuthenticated])
 @swagger_auto_schema(
-    tags=['Authentification'],
+    method='get',
+    tags=['1. Authentification'],
     operation_summary="Vérifier l'authentification",
     operation_description="Vérifier si l'utilisateur est connecté et retourner ses informations",
     responses={
@@ -252,6 +251,8 @@ class ProfilUtilisateurView(generics.RetrieveUpdateAPIView):
         401: "Non authentifié - Token JWT requis"
     }
 )
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
 def verifier_authentification(request):
     """
     Vue pour vérifier si l'utilisateur est authentifié.
@@ -262,10 +263,9 @@ def verifier_authentification(request):
     })
 
 
-@api_view(['POST'])
-@permission_classes([permissions.IsAuthenticated])
 @swagger_auto_schema(
-    tags=['Authentification'],
+    method='post',
+    tags=['1. Authentification'],
     operation_summary="Déconnexion utilisateur",
     operation_description="Invalider le token JWT de l'utilisateur connecté",
     responses={
@@ -281,6 +281,8 @@ def verifier_authentification(request):
         401: "Non authentifié - Token JWT requis"
     }
 )
+@api_view(['POST'])
+@permission_classes([permissions.IsAuthenticated])
 def logout(request):
     """
     Vue pour la déconnexion de l'utilisateur.
