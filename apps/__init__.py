@@ -2,3 +2,5 @@
 import apps.contrats 
 # Paiements app import for Django auto-discovery
 import apps.paiements 
+# RendezVous app import for Django auto-discovery
+import apps.rendezvous 

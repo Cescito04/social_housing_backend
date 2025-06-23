@@ -56,6 +56,7 @@ urlpatterns = [
     path('api/chambres/', include('apps.chambres.urls')),
     path('api/contrats/', include('apps.contrats.urls')),
     path('api/paiements/', include('apps.paiements.urls')),
+    path('api/rendez-vous/', include('apps.rendezvous.urls')),
     path('api/token/refresh/', CustomTokenRefreshView.as_view(), name='token_refresh'),
     
     # Swagger URLs
