@@ -28,7 +28,7 @@ schema_view = get_schema_view(
 # Vue personnalisée pour le rafraîchissement de token avec tags Swagger
 class CustomTokenRefreshView(TokenRefreshView):
     @swagger_auto_schema(
-        tags=['1. Authentification'],
+        tags=['Authentification'],
         operation_summary="Rafraîchir le token JWT",
         operation_description="Obtenir un nouveau token d'accès en utilisant le token de rafraîchissement",
         responses={
@@ -53,6 +53,7 @@ urlpatterns = [
     # API URLs
     path('api/', include('apps.utilisateurs.urls')),
     path('api/maisons/', include('apps.maisons.urls')),
+    path('api/chambres/', include('apps.chambres.urls')),
     path('api/token/refresh/', CustomTokenRefreshView.as_view(), name='token_refresh'),
     
     # Swagger URLs
