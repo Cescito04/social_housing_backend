@@ -6,3 +6,5 @@ import apps.paiements
 import apps.rendezvous 
 # Medias app import for Django auto-discovery
 import apps.medias 
+# Problemes app import for Django auto-discovery
+import apps.problemes 
