@@ -4,3 +4,5 @@ import apps.contrats
 import apps.paiements 
 # RendezVous app import for Django auto-discovery
 import apps.rendezvous 
+# Medias app import for Django auto-discovery
+import apps.medias 
