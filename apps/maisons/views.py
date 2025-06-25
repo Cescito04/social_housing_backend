@@ -10,6 +10,8 @@ class MaisonViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated, IsOwner]
 
     def get_queryset(self):
+        if getattr(self, 'swagger_fake_view', False):
+            return Maison.objects.none()
         return Maison.objects.filter(proprietaire=self.request.user)
 
     def perform_create(self, serializer):
