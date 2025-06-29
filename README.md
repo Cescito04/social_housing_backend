@@ -10,6 +10,18 @@ Backend Django pour la gestion de logements sociaux avec authentification JWT et
 - **Documentation API** : Swagger/OpenAPI
 - **Conteneurisation** : Docker + Docker Compose
 - **Modèle utilisateur personnalisé** avec rôles (propriétaire/locataire)
+- **Gestion complète des logements, chambres, contrats, paiements, problèmes, médias et rendez-vous**
+
+## 🧩 Modules principaux
+
+- **utilisateurs** : Gestion des utilisateurs, rôles (propriétaire/locataire), inscription, authentification, profils personnalisés.
+- **maisons** : Gestion des maisons (adresse, géolocalisation, propriétaire, description).
+- **chambres** : Gestion des chambres (type, taille, prix, disponibilité, équipements, lien avec maison).
+- **contrats** : Gestion des contrats de location (locataire, chambre, dates, caution, mode de paiement, statut).
+- **paiements** : Suivi des paiements de loyers (contrat, montant, statut, échéance, date de paiement).
+- **problemes** : Signalement et suivi des problèmes (type, description, responsable, statut, contrat lié).
+- **medias** : Gestion des médias associés aux chambres (photos, vidéos, description).
+- **rendezvous** : Prise de rendez-vous pour visites de chambres (locataire, chambre, date/heure, statut).
 
 ## 📋 Prérequis
 
@@ -168,17 +180,20 @@ curl -X GET http://localhost:8000/api/me/ \
 ```
 social_housing_backend/
 ├── apps/
+│   ├── chambres/
+│   ├── contrats/
+│   ├── maisons/
+│   ├── medias/
+│   ├── paiements/
+│   ├── problemes/
+│   ├── rendezvous/
 │   └── utilisateurs/
-│       ├── __init__.py
-│       ├── admin.py
-│       ├── apps.py
-│       ├── models.py
-│       ├── serializers.py
-│       ├── urls.py
-│       └── views.py
 ├── social_logement/
 │   ├── __init__.py
 │   ├── asgi.py
+│   ├── management/
+│   │   └── commands/
+│   │       └── wait_for_db.py
 │   ├── settings.py
 │   ├── urls.py
 │   └── wsgi.py
@@ -189,7 +204,8 @@ social_housing_backend/
 ├── env.example
 ├── manage.py
 ├── README.md
-└── requirements.txt
+├── requirements.txt
+└── ...
 ```
 
 ## 🔒 Sécurité
