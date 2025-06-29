@@ -6,7 +6,7 @@ app_name = 'utilisateurs'
 urlpatterns = [
     # Endpoints d'authentification
     path('register/', views.InscriptionView.as_view(), name='inscription'),
-    path('token/', views.LoginView.as_view(), name='login'),
+    path('token/', views.CustomTokenObtainPairView.as_view(), name='login'),
     path('logout/', views.logout, name='logout'),
     
     # Endpoints de gestion des utilisateurs

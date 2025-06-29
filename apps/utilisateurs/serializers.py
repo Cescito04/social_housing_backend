@@ -2,6 +2,7 @@ from rest_framework import serializers
 from django.contrib.auth import authenticate
 from django.contrib.auth.password_validation import validate_password
 from .models import Utilisateur
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
 class UtilisateurSerializer(serializers.ModelSerializer):
@@ -106,4 +107,12 @@ class UtilisateurUpdateSerializer(serializers.ModelSerializer):
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
         instance.save()
-        return instance 
+        return instance
+
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+        token['role'] = user.role
+        return token 

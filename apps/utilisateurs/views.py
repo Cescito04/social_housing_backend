@@ -11,7 +11,8 @@ from .serializers import (
     UtilisateurSerializer,
     InscriptionSerializer,
     LoginSerializer,
-    UtilisateurUpdateSerializer
+    UtilisateurUpdateSerializer,
+    CustomTokenObtainPairSerializer
 )
 
 
@@ -122,6 +123,10 @@ class InscriptionView(generics.CreateAPIView):
                 'access': str(refresh.access_token),
             }
         }, status=status.HTTP_201_CREATED)
+
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
 
 
 class LoginView(TokenObtainPairView):
