@@ -9,9 +9,12 @@ class ChambreViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated, IsOwnerOfMaison]
 
     def get_queryset(self):
+        user = self.request.user
         if getattr(self, 'swagger_fake_view', False):
             return Chambre.objects.none()
-        return Chambre.objects.filter(maison__proprietaire=self.request.user)
+        if user.is_superuser:
+            return Chambre.objects.all()
+        return Chambre.objects.filter(maison__proprietaire=user)
 
     def perform_create(self, serializer):
         maison = serializer.validated_data['maison']

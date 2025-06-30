@@ -53,7 +53,7 @@ urlpatterns = [
     # API URLs
     path('api/', include('apps.utilisateurs.urls')),
     path('api/maisons/', include('apps.maisons.urls')),
-    path('api/chambres/', include('apps.chambres.urls')),
+    path('api/', include('apps.chambres.urls')),
     path('api/contrats/', include('apps.contrats.urls')),
     path('api/paiements/', include('apps.paiements.urls')),
     path('api/rendez-vous/', include('apps.rendezvous.urls')),
