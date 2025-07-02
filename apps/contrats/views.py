@@ -31,7 +31,7 @@ class ContratViewSet(viewsets.ModelViewSet):
             if chambre.maison.proprietaire != user:
                 from rest_framework.exceptions import PermissionDenied
                 raise PermissionDenied("Vous ne pouvez créer un contrat que pour vos propres chambres.")
-        serializer.save()
+        serializer.save(locataire=user)
 
     @swagger_auto_schema(tags=['Contrats'])
     def list(self, request, *args, **kwargs):

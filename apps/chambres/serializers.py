@@ -1,7 +1,10 @@
 from rest_framework import serializers
 from .models import Chambre
+from apps.maisons.serializers import MaisonSerializer
 
 class ChambreSerializer(serializers.ModelSerializer):
+    maison = MaisonSerializer(read_only=True)
+
     class Meta:
         model = Chambre
         fields = [

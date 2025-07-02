@@ -6,15 +6,23 @@ from .permissions import IsOwnerOfMaison
 
 class ChambreViewSet(viewsets.ModelViewSet):
     serializer_class = ChambreSerializer
-    permission_classes = [permissions.IsAuthenticated, IsOwnerOfMaison]
+    # permission_classes = [permissions.IsAuthenticated, IsOwnerOfMaison]
+
+    def get_permissions(self):
+        if self.action == 'list':
+            return [permissions.IsAuthenticated()]
+        if self.action == 'retrieve':
+            return [permissions.IsAuthenticated()]
+        return [permissions.IsAuthenticated(), IsOwnerOfMaison()]
 
     def get_queryset(self):
         user = self.request.user
         if getattr(self, 'swagger_fake_view', False):
             return Chambre.objects.none()
-        if user.is_superuser:
-            return Chambre.objects.all()
-        return Chambre.objects.filter(maison__proprietaire=user)
+        if hasattr(user, 'role') and user.role == 'proprietaire':
+            return Chambre.objects.filter(maison__proprietaire=user)
+        # Pour les locataires (et autres rôles), retourner toutes les chambres
+        return Chambre.objects.all()
 
     def perform_create(self, serializer):
         maison = serializer.validated_data['maison']

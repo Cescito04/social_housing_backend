@@ -12,7 +12,11 @@ class MaisonViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         if getattr(self, 'swagger_fake_view', False):
             return Maison.objects.none()
-        return Maison.objects.filter(proprietaire=self.request.user)
+        user = self.request.user
+        if hasattr(user, 'role') and user.role == 'proprietaire':
+            return Maison.objects.filter(proprietaire=user)
+        # Pour les locataires (et autres rôles), retourner toutes les maisons
+        return Maison.objects.all()
 
     def perform_create(self, serializer):
         serializer.save(proprietaire=self.request.user)

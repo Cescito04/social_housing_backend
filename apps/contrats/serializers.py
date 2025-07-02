@@ -8,4 +8,4 @@ class ContratSerializer(serializers.ModelSerializer):
             'id', 'locataire', 'chambre', 'date_debut', 'date_fin', 'montant_caution',
             'mois_caution', 'description', 'mode_paiement', 'periodicite', 'statut', 'cree_le'
         ]
-        read_only_fields = ['id', 'cree_le'] 
+        read_only_fields = ['id', 'cree_le', 'locataire'] 
