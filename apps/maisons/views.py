@@ -7,7 +7,12 @@ from .permissions import IsOwner
 
 class MaisonViewSet(viewsets.ModelViewSet):
     serializer_class = MaisonSerializer
-    permission_classes = [permissions.IsAuthenticated, IsOwner]
+    # Les permissions sont gérées dynamiquement selon l'action
+
+    def get_permissions(self):
+        if self.action in ['retrieve', 'list']:
+            return [permissions.IsAuthenticated()]
+        return [permissions.IsAuthenticated(), IsOwner()]
 
     def get_queryset(self):
         if getattr(self, 'swagger_fake_view', False):

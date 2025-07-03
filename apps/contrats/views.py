@@ -27,11 +27,20 @@ class ContratViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         user = self.request.user
         chambre = serializer.validated_data['chambre']
+        # Vérifie que la chambre est disponible
+        if not chambre.disponible:
+            from rest_framework.exceptions import ValidationError
+            raise ValidationError("Cette chambre n'est plus disponible.")
+        # Si propriétaire, vérifie qu'il possède la chambre
         if hasattr(user, 'role') and user.role == 'proprietaire':
             if chambre.maison.proprietaire != user:
                 from rest_framework.exceptions import PermissionDenied
                 raise PermissionDenied("Vous ne pouvez créer un contrat que pour vos propres chambres.")
+        # Si locataire, il peut louer n'importe quelle chambre disponible
         serializer.save(locataire=user)
+        # Marque la chambre comme non disponible
+        chambre.disponible = False
+        chambre.save(update_fields=['disponible'])
 
     @swagger_auto_schema(tags=['Contrats'])
     def list(self, request, *args, **kwargs):
