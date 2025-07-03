@@ -1,94 +1,107 @@
-# Social Logement Backend
+# 🏠 Social Housing Backend API
 
-Backend Django pour la gestion de logements sociaux avec authentification JWT et API REST.
+Backend Django moderne pour la gestion de logements sociaux avec authentification JWT, API REST complète et gestion avancée des contrats de location.
 
-## 🚀 Fonctionnalités
+## 📋 Table des Matières
 
-- **Framework** : Django 4.2 + Django REST Framework
-- **Authentification** : JWT (JSON Web Tokens)
-- **Base de données** : PostgreSQL
-- **Documentation API** : Swagger/OpenAPI
-- **Conteneurisation** : Docker + Docker Compose
+- [Fonctionnalités](#-fonctionnalités)
+- [Technologies Utilisées](#-technologies-utilisées)
+- [Installation](#-installation)
+- [Configuration](#-configuration)
+- [API Endpoints](#-api-endpoints)
+- [Modèles de Données](#-modèles-de-données)
+- [Authentification](#-authentification)
+- [Déploiement](#-déploiement)
+- [Développement](#-développement)
+- [Tests](#-tests)
+
+## ✨ Fonctionnalités
+
+### 🔐 Authentification & Sécurité
+- **Authentification JWT** avec tokens d'accès et de rafraîchissement
 - **Modèle utilisateur personnalisé** avec rôles (propriétaire/locataire)
-- **Gestion complète des logements, chambres, contrats, paiements, problèmes, médias et rendez-vous**
+- **Validation des données** avec sérialiseurs Django REST Framework
+- **Permissions granulaires** par rôle et par ressource
+- **Protection CSRF** et validation des tokens
 
-## 🧩 Modules principaux
+### 🏘️ Gestion des Propriétés
+- **CRUD complet** pour les maisons et chambres
+- **Géolocalisation** avec coordonnées GPS
+- **Gestion des disponibilités** des chambres
+- **Validation des données** et contraintes métier
+- **Permissions basées sur la propriété** (propriétaire uniquement)
 
-- **utilisateurs** : Gestion des utilisateurs, rôles (propriétaire/locataire), inscription, authentification, profils personnalisés.
-- **maisons** : Gestion des maisons (adresse, géolocalisation, propriétaire, description).
-- **chambres** : Gestion des chambres (type, taille, prix, disponibilité, équipements, lien avec maison).
-- **contrats** : Gestion des contrats de location (locataire, chambre, dates, caution, mode de paiement, statut).
-- **paiements** : Suivi des paiements de loyers (contrat, montant, statut, échéance, date de paiement).
-- **problemes** : Signalement et suivi des problèmes (type, description, responsable, statut, contrat lié).
-- **medias** : Gestion des médias associés aux chambres (photos, vidéos, description).
-- **rendezvous** : Prise de rendez-vous pour visites de chambres (locataire, chambre, date/heure, statut).
+### 📋 Gestion des Contrats
+- **Création automatisée** des contrats avec assignation du locataire
+- **Validation des données** en temps réel
+- **Gestion des cautions** et modes de paiement
+- **Suivi des statuts** (actif, terminé, annulé)
+- **Permissions différenciées** selon le rôle
 
-## 📋 Prérequis
+### 💰 Gestion Financière
+- **Suivi des paiements** de loyer
+- **Gestion des cautions** et remboursements
+- **Historique des transactions**
+- **Validation des montants** et échéances
 
-- Docker
-- Docker Compose
+### 🔧 Gestion des Problèmes
+- **Signalement** de problèmes techniques
+- **Suivi des réparations** et maintenance
+- **Communication** propriétaire-locataire
+- **Statuts de progression** des problèmes
 
-## 🛠️ Installation
+### 📅 Gestion des Rendez-vous
+- **Planification** de visites de propriétés
+- **Calendrier interactif** via API
+- **Notifications** et rappels
+- **Gestion des disponibilités**
 
-1. **Cloner le projet**
-   ```bash
-   git clone <repository-url>
-   cd social_housing_backend
-   ```
+### 📸 Gestion des Médias
+- **Upload et stockage** de photos/vidéos
+- **Association** aux chambres et propriétés
+- **Validation des formats** et tailles
+- **Optimisation** des images
 
-2. **Configurer les variables d'environnement**
-   ```bash
-   cp env.example .env
-   # Éditer le fichier .env avec vos valeurs
-   ```
+## 🛠️ Technologies Utilisées
 
-3. **Lancer le projet**
-   ```bash
-   docker-compose up --build
-   ```
+### Backend
+- **Django 4.2** - Framework web Python robuste
+- **Django REST Framework** - API REST moderne
+- **PostgreSQL** - Base de données relationnelle
+- **JWT** - Authentification sécurisée
+- **Django CORS Headers** - Gestion CORS
 
-4. **Créer un superutilisateur (optionnel)**
-   ```bash
-   docker-compose exec web python manage.py createsuperuser
-   ```
+### Outils de Développement
+- **Docker & Docker Compose** - Conteneurisation
+- **Pytest** - Tests automatisés
+- **Black** - Formatage de code Python
+- **Flake8** - Linting et qualité de code
+- **Swagger/OpenAPI** - Documentation API
 
-## 🌐 Accès aux services
+### Sécurité
+- **JWT Authentication** - Tokens sécurisés
+- **Django Permissions** - Contrôle d'accès granulaire
+- **Validation des données** - Sécurité des entrées
+- **CSRF Protection** - Protection contre les attaques
 
-- **API** : http://localhost:8000/api/
-- **Documentation Swagger** : http://localhost:8000/swagger/
-- **Admin Django** : http://localhost:8000/admin/
-- **Base de données** : localhost:5432
+## 🚀 Installation
 
-## 📚 Endpoints API
+### Prérequis
+- **Docker** et **Docker Compose**
+- **Git**
 
-### Authentification
-- `POST /api/register/` - Inscription utilisateur
-- `POST /api/token/` - Connexion JWT
-- `POST /api/token/refresh/` - Rafraîchir le token JWT
+### 1. Cloner le Repository
+```bash
+git clone https://github.com/your-username/social_housing_backend.git
+cd social_housing_backend
+```
 
-### Profil utilisateur
-- `GET /api/me/` - Récupérer le profil utilisateur connecté
-- `PUT /api/me/` - Mettre à jour le profil utilisateur
-- `PATCH /api/me/` - Mettre à jour partiellement le profil
-- `GET /api/auth-check/` - Vérifier l'authentification
+### 2. Configuration de l'Environnement
+```bash
+cp env.example .env
+```
 
-## 👤 Modèle Utilisateur
-
-Le modèle `Utilisateur` hérite d'`AbstractUser` et inclut :
-
-- **Champs obligatoires** :
-  - `email` (unique, utilisé comme USERNAME_FIELD)
-  - `username`
-  - `first_name`
-  - `last_name`
-  - `telephone` (avec validation regex)
-  - `cni` (numéro CNI unique)
-  - `role` (choices: propriétaire/locataire)
-
-## 🔧 Configuration
-
-### Variables d'environnement (.env)
-
+Éditez le fichier `.env` avec vos configurations :
 ```env
 # Django Settings
 DEBUG=True
@@ -110,7 +123,180 @@ JWT_REFRESH_TOKEN_LIFETIME=1
 ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0
 ```
 
-## 🐳 Commandes Docker utiles
+### 3. Lancer avec Docker
+```bash
+# Construction et démarrage
+docker-compose up --build
+
+# En arrière-plan
+docker-compose up -d --build
+```
+
+### 4. Initialisation de la Base de Données
+```bash
+# Appliquer les migrations
+docker-compose exec web python manage.py migrate
+
+# Créer un superutilisateur (optionnel)
+docker-compose exec web python manage.py createsuperuser
+```
+
+## 🌐 Accès aux Services
+
+- **API REST** : http://localhost:8000/api/
+- **Documentation Swagger** : http://localhost:8000/swagger/
+- **Admin Django** : http://localhost:8000/admin/
+- **Base de données** : localhost:5432
+
+## 🔌 API Endpoints
+
+### 🔐 Authentification
+```http
+POST /api/register/                    # Inscription utilisateur
+POST /api/token/                       # Connexion JWT
+POST /api/token/refresh/               # Rafraîchir le token JWT
+GET  /api/auth-check/                  # Vérifier l'authentification
+```
+
+### 👤 Utilisateurs
+```http
+GET  /api/me/                          # Profil utilisateur connecté
+PUT  /api/me/                          # Mettre à jour le profil
+PATCH /api/me/                         # Mise à jour partielle
+```
+
+### 🏘️ Maisons
+```http
+GET    /api/maisons/                   # Liste des maisons
+POST   /api/maisons/                   # Créer une maison
+GET    /api/maisons/{id}/              # Détails d'une maison
+PUT    /api/maisons/{id}/              # Modifier une maison
+DELETE /api/maisons/{id}/              # Supprimer une maison
+```
+
+### 🛏️ Chambres
+```http
+GET    /api/maisons/{id}/chambres/     # Chambres d'une maison
+POST   /api/maisons/{id}/chambres/     # Créer une chambre
+GET    /api/chambres/{id}/             # Détails d'une chambre
+PUT    /api/chambres/{id}/             # Modifier une chambre
+DELETE /api/chambres/{id}/             # Supprimer une chambre
+```
+
+### 📋 Contrats
+```http
+GET    /api/contrats/                  # Liste des contrats
+POST   /api/contrats/                  # Créer un contrat
+GET    /api/contrats/{id}/             # Détails d'un contrat
+DELETE /api/contrats/{id}/             # Annuler un contrat
+```
+
+### 💰 Paiements
+```http
+GET    /api/paiements/                 # Liste des paiements
+POST   /api/paiements/                 # Créer un paiement
+GET    /api/paiements/{id}/            # Détails d'un paiement
+PUT    /api/paiements/{id}/            # Modifier un paiement
+```
+
+### 🔧 Problèmes
+```http
+GET    /api/problemes/                 # Liste des problèmes
+POST   /api/problemes/                 # Signaler un problème
+GET    /api/problemes/{id}/            # Détails d'un problème
+PUT    /api/problemes/{id}/            # Modifier un problème
+```
+
+### 📅 Rendez-vous
+```http
+GET    /api/rendezvous/                # Liste des rendez-vous
+POST   /api/rendezvous/                # Créer un rendez-vous
+GET    /api/rendezvous/{id}/           # Détails d'un rendez-vous
+PUT    /api/rendezvous/{id}/           # Modifier un rendez-vous
+```
+
+### 📸 Médias
+```http
+GET    /api/medias/                    # Liste des médias
+POST   /api/medias/                    # Upload d'un média
+GET    /api/medias/{id}/               # Détails d'un média
+DELETE /api/medias/{id}/               # Supprimer un média
+```
+
+## 📊 Modèles de Données
+
+### 👤 Utilisateur
+```python
+class Utilisateur(AbstractUser):
+    email = models.EmailField(unique=True)
+    telephone = models.CharField(max_length=15, validators=[phone_regex])
+    cni = models.CharField(max_length=20, unique=True)
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES)
+```
+
+### 🏘️ Maison
+```python
+class Maison(models.Model):
+    proprietaire = models.ForeignKey(Utilisateur, on_delete=models.CASCADE)
+    adresse = models.CharField(max_length=255)
+    latitude = models.DecimalField(max_digits=9, decimal_places=6)
+    longitude = models.DecimalField(max_digits=9, decimal_places=6)
+    description = models.TextField()
+```
+
+### 🛏️ Chambre
+```python
+class Chambre(models.Model):
+    maison = models.ForeignKey(Maison, on_delete=models.CASCADE)
+    type = models.CharField(max_length=50)
+    taille = models.DecimalField(max_digits=5, decimal_places=2)
+    prix = models.DecimalField(max_digits=10, decimal_places=2)
+    disponible = models.BooleanField(default=True)
+```
+
+### 📋 Contrat
+```python
+class Contrat(models.Model):
+    locataire = models.ForeignKey(Utilisateur, on_delete=models.CASCADE)
+    chambre = models.ForeignKey(Chambre, on_delete=models.CASCADE)
+    date_debut = models.DateField()
+    date_fin = models.DateField()
+    montant_caution = models.DecimalField(max_digits=10, decimal_places=2)
+    mode_paiement = models.CharField(max_length=20, choices=PAIEMENT_CHOICES)
+    periodicite = models.CharField(max_length=20, choices=PERIODICITE_CHOICES)
+```
+
+## 🔐 Authentification
+
+### JWT Configuration
+```python
+# settings.py
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+}
+```
+
+### Exemple d'Utilisation
+```bash
+# Connexion
+curl -X POST http://localhost:8000/api/token/ \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "user@example.com",
+    "password": "password123"
+  }'
+
+# Utilisation du token
+curl -X GET http://localhost:8000/api/me/ \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+```
+
+## 🐳 Commandes Docker Utiles
 
 ```bash
 # Lancer le projet
@@ -125,6 +311,9 @@ docker-compose down
 # Voir les logs
 docker-compose logs -f
 
+# Reconstruire les images
+docker-compose up --build
+
 # Exécuter des commandes Django
 docker-compose exec web python manage.py migrate
 docker-compose exec web python manage.py createsuperuser
@@ -133,116 +322,133 @@ docker-compose exec web python manage.py collectstatic
 # Accéder au shell Django
 docker-compose exec web python manage.py shell
 
+# Lancer les tests
+docker-compose exec web python -m pytest
+
 # Redémarrer un service
 docker-compose restart web
 ```
 
-## 📝 Exemples d'utilisation
-
-### Inscription d'un utilisateur
-
-```bash
-curl -X POST http://localhost:8000/api/register/ \
-  -H "Content-Type: application/json" \
-  -d '{
-    "email": "user@example.com",
-    "username": "user123",
-    "first_name": "John",
-    "last_name": "Doe",
-    "telephone": "+1234567890",
-    "cni": "123456789",
-    "role": "proprietaire",
-    "password": "securepassword123",
-    "password_confirmation": "securepassword123"
-  }'
-```
-
-### Connexion
-
-```bash
-curl -X POST http://localhost:8000/api/token/ \
-  -H "Content-Type: application/json" \
-  -d '{
-    "email": "user@example.com",
-    "password": "securepassword123"
-  }'
-```
-
-### Accéder au profil (avec token)
-
-```bash
-curl -X GET http://localhost:8000/api/me/ \
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
-```
-
-## 🏗️ Structure du projet
-
-```
-social_housing_backend/
-├── apps/
-│   ├── chambres/
-│   ├── contrats/
-│   ├── maisons/
-│   ├── medias/
-│   ├── paiements/
-│   ├── problemes/
-│   ├── rendezvous/
-│   └── utilisateurs/
-├── social_logement/
-│   ├── __init__.py
-│   ├── asgi.py
-│   ├── management/
-│   │   └── commands/
-│   │       └── wait_for_db.py
-│   ├── settings.py
-│   ├── urls.py
-│   └── wsgi.py
-├── .env
-├── .gitignore
-├── docker-compose.yml
-├── Dockerfile
-├── env.example
-├── manage.py
-├── README.md
-├── requirements.txt
-└── ...
-```
-
-## 🔒 Sécurité
-
-- Authentification JWT avec rotation des tokens
-- Validation des mots de passe Django
-- Validation des numéros de téléphone
-- Protection CSRF
-- Configuration CORS
-
 ## 🧪 Tests
 
+### Lancer les Tests
 ```bash
-# Lancer les tests
-docker-compose exec web python manage.py test
+# Tous les tests
+docker-compose exec web python -m pytest
 
-# Lancer les tests avec couverture
-docker-compose exec web python manage.py test --verbosity=2
+# Tests avec couverture
+docker-compose exec web python -m pytest --cov=apps
+
+# Tests spécifiques
+docker-compose exec web python -m pytest apps/utilisateurs/tests/
 ```
 
-## 📦 Déploiement
+### Structure des Tests
+```
+apps/
+├── utilisateurs/
+│   └── tests/
+│       ├── test_models.py
+│       ├── test_views.py
+│       └── test_serializers.py
+├── maisons/
+│   └── tests/
+└── contrats/
+    └── tests/
+```
 
-Le projet est configuré pour être déployé avec Docker. Pour la production :
+## 🔧 Développement
 
-1. Modifier `DEBUG=False` dans `.env`
-2. Générer une nouvelle `SECRET_KEY`
-3. Configurer les variables d'environnement de production
-4. Utiliser un serveur web comme Nginx en production
+### Scripts Utiles
+```bash
+# Formatage du code
+docker-compose exec web black .
+
+# Linting
+docker-compose exec web flake8
+
+# Vérification des migrations
+docker-compose exec web python manage.py makemigrations --dry-run
+
+# Créer des migrations
+docker-compose exec web python manage.py makemigrations
+
+# Appliquer les migrations
+docker-compose exec web python manage.py migrate
+```
+
+### Variables d'Environnement de Développement
+```env
+DEBUG=True
+SECRET_KEY=dev-secret-key
+ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0
+CORS_ALLOWED_ORIGINS=http://localhost:3000
+```
+
+## 🚀 Déploiement
+
+### Production
+```env
+DEBUG=False
+SECRET_KEY=your-production-secret-key
+ALLOWED_HOSTS=your-domain.com
+CORS_ALLOWED_ORIGINS=https://your-frontend-domain.com
+```
+
+### Docker Production
+```bash
+# Construire pour la production
+docker-compose -f docker-compose.prod.yml up --build
+
+# Variables d'environnement de production
+cp env.example .env.prod
+# Éditer .env.prod avec les valeurs de production
+```
+
+## 📝 Exemples d'Utilisation
+
+### Création d'un Contrat
+```bash
+curl -X POST http://localhost:8000/api/contrats/ \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "chambre": 1,
+    "date_debut": "2024-01-01",
+    "date_fin": "2024-12-31",
+    "montant_caution": 500.00,
+    "mode_paiement": "virement",
+    "periodicite": "mensuel"
+  }'
+```
+
+### Mise à Jour d'un Profil
+```bash
+curl -X PUT http://localhost:8000/api/me/ \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "first_name": "John",
+    "last_name": "Doe",
+    "telephone": "+1234567890"
+  }'
+```
 
 ## 🤝 Contribution
 
-1. Fork le projet
-2. Créer une branche feature (`git checkout -b feature/AmazingFeature`)
-3. Commit les changements (`git commit -m 'Add some AmazingFeature'`)
-4. Push vers la branche (`git push origin feature/AmazingFeature`)
-5. Ouvrir une Pull Request
+1. **Fork** le projet
+2. **Créez** une branche pour votre fonctionnalité
+3. **Commitez** vos changements
+4. **Poussez** vers la branche
+5. **Ouvrez** une Pull Request
 
 ## 📄 Licence
 
-Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails. 
+Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
+
+## 🆘 Support
+
+Pour toute question ou problème :
+- Ouvrez une issue sur GitHub
+- Consultez la documentation de l'API
+- Contactez l'équipe de développement 
