@@ -1,4 +1,5 @@
-from rest_framework import viewsets, permissions, filters
+from rest_framework import viewsets, permissions, filters, status
+from rest_framework.parsers import MultiPartParser, FormParser
 from drf_yasg.utils import swagger_auto_schema
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Media
@@ -8,6 +9,7 @@ from .permissions import IsOwnerOfChambreMedia
 class MediaViewSet(viewsets.ModelViewSet):
     serializer_class = MediaSerializer
     permission_classes = [permissions.IsAuthenticated, IsOwnerOfChambreMedia]
+    parser_classes = [MultiPartParser, FormParser]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend]
     search_fields = ['type', 'description']
     ordering_fields = ['cree_le']
