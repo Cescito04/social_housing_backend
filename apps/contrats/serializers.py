@@ -4,6 +4,7 @@ from apps.chambres.models import Chambre
 from apps.utilisateurs.models import Utilisateur
 
 class ContratSerializer(serializers.ModelSerializer):
+    chambre = serializers.PrimaryKeyRelatedField(queryset=Chambre.objects.all())
     maison = serializers.SerializerMethodField()
     locataire_info = serializers.SerializerMethodField()
 
