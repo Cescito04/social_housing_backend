@@ -17,12 +17,16 @@ class ChambreViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
+        queryset = Chambre.objects.all()
+        maison_id = self.request.query_params.get('maison_id')
+        if maison_id:
+            queryset = queryset.filter(maison_id=maison_id)
         if getattr(self, 'swagger_fake_view', False):
             return Chambre.objects.none()
         if hasattr(user, 'role') and user.role == 'proprietaire':
-            return Chambre.objects.filter(maison__proprietaire=user)
-        # Pour les locataires (et autres rôles), retourner toutes les chambres
-        return Chambre.objects.all()
+            return queryset.filter(maison__proprietaire=user)
+        # Pour les locataires (et autres rôles), retourner les chambres filtrées
+        return queryset
 
     def perform_create(self, serializer):
         maison = serializer.validated_data['maison']
